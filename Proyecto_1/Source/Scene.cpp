@@ -108,7 +108,7 @@ void CScene::initShaders() {
 	phong_program.addAttribute("vNormal");
 	phong_program.addAttribute("vTexture");
 	phong_program.addAttribute("vTangent");
-	phong_program.addUniform("vBitagent");
+	phong_program.addUniform("vBitangent");
 	phong_program.addUniform("mProjection");
 	phong_program.addUniform("mModelView");
 

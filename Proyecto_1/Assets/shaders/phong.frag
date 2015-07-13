@@ -1,11 +1,12 @@
 #version 330
 #extension GL_ARB_separate_shader_objects :enable
 
-#define NUMLIGHTS 3
+#define NUMLIGHTS 2
 uniform sampler2D textureSampler;
 uniform sampler2D normalSampler;
 uniform vec3 diffuseObject, specularObject, ambientObject, sceneAmbient, eyePos;
 uniform float roughnessValue, fresnelValue, gaussConstant;
+
 uniform struct	LightParameters{
 	int type;
 	vec3 ambient;
@@ -26,7 +27,8 @@ in vec3 vVertexColor;
 in vec3 fPosition;
 in vec3 fNormal;
 in vec2 UV;
-
+in vec3 fTangent;
+in vec3 fBitangent;
 
 
 layout(location = 0) out vec4 vFragColor;
@@ -37,7 +39,7 @@ void main(void)
 	vec3 ambient, diffuse, specular, globalAmbient;
 	vec3 lightDir;
 	vec3 finalLight = sceneAmbient * ambientObject;
-	for (int i=0; i<3; i++)
+	for (int i=0; i<NUMLIGHTS; i++)
 	{
 		if (lightParameters[i].type == 1){
 			lightDir = normalize(lightParameters[i].position-fPosition);
@@ -92,9 +94,19 @@ void main(void)
 			}
 		}
 	}
+
+	mat3 tbn = mat3(fTangent, fBitangent, fNormal);
+	vec3 BumpNorm = vec3(texture(normalSampler, UV.xy));
+	vec3 DecalCol = vec3(texture(textureSampler, UV.xy));
+	BumpNorm = tbn * ((BumpNorm - 0.5) * 2.0);
+	float NL = max(dot(BumpNorm, normalize(lightDir)), 0.0);
+	vec3 newDiffuse = NL * finalLight * DecalCol;
+	vFragColor = vec4(newDiffuse, 1.0);
+
 	//vec4 final = vec4(clamp(finalLight, vec3(0), vec3(1)), 1.0)*texture(myTextureSampler, UV);
 	//vFragColor = final;
-	//vFragColor = vec4(clamp(finalLight, vec3(0), vec3(1)), 1.0);
-	vFragColor = texture(textureSampler, UV);
+	//vFragColor = vec4(clamp(finalLight, vec3(0), vec3(1)), 1.0)*texture(textureSampler, UV)*texture(normalSampler, UV);
+	//vFragColor = texture(textureSampler, UV);
+	//vFragColor = vec4(0.0, aux.z, 0.0, 1.0);
 }
 

@@ -8,17 +8,19 @@ layout(location = 0) in vec3 vVertex;
 layout(location = 1) in vec3 vColor;
 layout(location = 2) in vec3 vNormal;
 layout(location = 3) in vec2 vTexture;
-layout(location = 4) in vec3 mTangent;
-layout(location = 5) in vec3 mBitangent;
+layout(location = 4) in vec3 vTangent;
+layout(location = 5) in vec3 vBitangent;
 
 out vec3 vVertexColor;
 out vec3 fNormal;
 out vec3 fPosition;
 out vec2 UV;
-
-
+out vec3 fTangent;
+out vec3 fBitangent;
 void main()
 {
+	fTangent = vTangent;
+	fBitangent = vBitangent;
     //Calcular la matriz normal
     //Transformaciones
     vVertexColor = clamp(vNormal,0,1);
@@ -46,6 +48,7 @@ void main()
     rotateMatrix[3][3] = 1.0f;
     
 	mat4 MV = translateMatrix* returnFig*rotateMatrix*scaleMatrix*centerFig*mModelView;
+
 	mat3 normalMatrix;
 	mat4 invTransp = inverse(transpose(MV));
 	normalMatrix = mat3(vec3(invTransp[0][0], invTransp[0][1], invTransp[0][2]), vec3(invTransp[1][0], invTransp[1][1], invTransp[1][2]), vec3(invTransp[2][0], invTransp[2][1], invTransp[2][2]));
