@@ -96,64 +96,64 @@ void CScene::initShaders() {
 
 	//Phong -------------------------------------------------------------------------------------------------
 	//Load the shaders
-	phong_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
-	phong_program.loadShader("./Assets/shaders/phong.frag", CGLSLProgram::FRAGMENT);
+	normal_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
+	normal_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
 	//Link the shaders in a program
-	phong_program.create_link();
+	normal_program.create_link();
 	//Enable the program
-	phong_program.enable();
+	normal_program.enable();
 	//Link the attributes and the uniforms
-	phong_program.addAttribute("vVertex");
-	phong_program.addAttribute("vColor");
-	phong_program.addAttribute("vNormal");
-	phong_program.addAttribute("vTexture");
-	phong_program.addAttribute("vTangent");
-	phong_program.addUniform("vBitangent");
-	phong_program.addUniform("mProjection");
-	phong_program.addUniform("mModelView");
+	normal_program.addAttribute("vVertex");
+	normal_program.addAttribute("vColor");
+	normal_program.addAttribute("vNormal");
+	normal_program.addAttribute("vTexture");
+	normal_program.addAttribute("vTangent");
+	normal_program.addUniform("vBitangent");
+	normal_program.addUniform("mProjection");
+	normal_program.addUniform("mModelView");
 
-	phong_program.addUniform("centerPosition");
-	phong_program.addUniform("translateFactor");
-	phong_program.addUniform("scaleFactor");
-	phong_program.addUniform("quat");
+	normal_program.addUniform("centerPosition");
+	normal_program.addUniform("translateFactor");
+	normal_program.addUniform("scaleFactor");
+	normal_program.addUniform("quat");
 
-	phong_program.addUniform("lightIndex");
-	phong_program.addUniform("ambient");
-	phong_program.addUniform("diffuse");
-	phong_program.addUniform("specular");
-	phong_program.addUniform("position");
+	normal_program.addUniform("lightIndex");
+	normal_program.addUniform("ambient");
+	normal_program.addUniform("diffuse");
+	normal_program.addUniform("specular");
+	normal_program.addUniform("position");
 
 	for (int i = 0; i < 2; i++){
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].type");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].ambient");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].diffuse");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].specular");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].position");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].shininness");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].constantAttenuation");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].linearAttenuation");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].quadraticAttenuation");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].spotDirection");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].spotExponent");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCutoff");
-		phong_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCosCutoff");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].type");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].ambient");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].diffuse");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].specular");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].position");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].shininness");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].constantAttenuation");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].linearAttenuation");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].quadraticAttenuation");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].spotDirection");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].spotExponent");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCutoff");
+		normal_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCosCutoff");
 	}
 
-	phong_program.addUniform("eyePos");
+	normal_program.addUniform("eyePos");
 
-	phong_program.addUniform("diffuseObject");
-	phong_program.addUniform("specularObject");
-	phong_program.addUniform("ambientObject");
-	phong_program.addUniform("sceneAmbient");
+	normal_program.addUniform("diffuseObject");
+	normal_program.addUniform("specularObject");
+	normal_program.addUniform("ambientObject");
+	normal_program.addUniform("sceneAmbient");
 	//Constantes del modelo cook torrance
-	phong_program.addUniform("roughnessValue");
-	phong_program.addUniform("fresnelValue");
-	phong_program.addUniform("gaussConstant");
+	normal_program.addUniform("roughnessValue");
+	normal_program.addUniform("fresnelValue");
+	normal_program.addUniform("gaussConstant");
 	//Texturas
-	phong_program.addUniform("textureSampler");
-	phong_program.addUniform("normalSampler");
+	normal_program.addUniform("textureSampler");
+	normal_program.addUniform("normalSampler");
 	//Disable the program
-	phong_program.disable();
+	normal_program.disable();
 
 }
 
@@ -326,7 +326,7 @@ CTexturedObject* CScene::getTexturedObject(int i)
 
 std::vector<CGLSLProgram*> CScene::getProgram(){
 	std::vector<CGLSLProgram*> programs;
-	programs.push_back(&phong_program);
+	programs.push_back(&normal_program);
 	programs.push_back(&selection_program);
 	return programs;
 }
