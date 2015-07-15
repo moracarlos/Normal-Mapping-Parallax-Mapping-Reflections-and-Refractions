@@ -33,13 +33,13 @@
     <None Include="Assets\JSON\lights.json">
       <Filter>JSON</Filter>
     </None>
-    <None Include="Assets\shaders\phong.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Assets\shaders\silhouette.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Assets\shaders\select.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\shaders\Normal Mapping.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

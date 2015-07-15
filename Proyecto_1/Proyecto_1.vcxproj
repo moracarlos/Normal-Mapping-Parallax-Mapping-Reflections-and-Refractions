@@ -82,9 +82,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="Assets\JSON\lights.json" />
-    <None Include="Assets\shaders\phong.frag" />
     <None Include="Assets\shaders\basic.vert" />
     <None Include="Assets\shaders\cook.frag" />
+    <None Include="Assets\shaders\Normal Mapping.frag" />
     <None Include="Assets\shaders\select.frag" />
     <None Include="Assets\shaders\silhouette.frag" />
     <None Include="Assets\shaders\toon.frag" />
