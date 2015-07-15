@@ -1,7 +1,7 @@
 #version 330
 
 uniform mat4 mProjection, mModelView;
-uniform vec3 scaleFactor, translateFactor, centerPosition;
+uniform vec3 scaleFactor, translateFactor, centerPosition, eyePos;
 uniform vec4 quat;
 
 layout(location = 0) in vec3 vVertex;
@@ -17,6 +17,8 @@ out vec3 fPosition;
 out vec2 UV;
 out vec3 fTangent;
 out vec3 fBitangent;
+out vec3 eyeVec;
+
 void main()
 {
 	fTangent = vTangent;
@@ -55,6 +57,10 @@ void main()
 	
 	UV = vTexture;
 	fNormal = normalize(normalMatrix * vNormal);
+
+	mat3 tbn = mat3(fTangent, fBitangent, fNormal);
+	eyeVec = tbn * (eyePos - vVertex);
+
 	vec4 pos = MV * vec4(vVertex, 1.0);
 	fPosition = pos.xyz;
 	gl_Position = mProjection * pos;

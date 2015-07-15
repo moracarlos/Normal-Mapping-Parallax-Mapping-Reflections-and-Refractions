@@ -13,8 +13,10 @@ CScene::~CScene(){
 
 void CScene::loadObjects()
 {
-	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/Floor.png");
-	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
+	//CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/Floor.png");
+	//mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
+	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/brick_diffuse.jpg");
+	mOb->getTexture()->loadTexture("./Assets/Textures/brick_height_map.jpg");
 	texturedObjects.push_back(mOb);
 }
 
@@ -94,10 +96,11 @@ void CScene::initShaders() {
 	//Disable the program
 	selection_program.disable();
 
-	//Phong -------------------------------------------------------------------------------------------------
+	//Normal - Parallax -------------------------------------------------------------------------------------------------
 	//Load the shaders
 	normal_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
-	normal_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
+	//normal_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
+	normal_program.loadShader("./Assets/shaders/parallaxMapping.frag", CGLSLProgram::FRAGMENT);
 	//Link the shaders in a program
 	normal_program.create_link();
 	//Enable the program
@@ -108,7 +111,7 @@ void CScene::initShaders() {
 	normal_program.addAttribute("vNormal");
 	normal_program.addAttribute("vTexture");
 	normal_program.addAttribute("vTangent");
-	normal_program.addUniform("vBitangent");
+	normal_program.addAttribute("vBitangent");
 	normal_program.addUniform("mProjection");
 	normal_program.addUniform("mModelView");
 

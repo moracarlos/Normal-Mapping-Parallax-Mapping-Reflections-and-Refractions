@@ -451,6 +451,7 @@ void CTexturedObject::display(){
 		glUniform3f(programs[current_shader]->getLocation("translateFactor"), transFX, transFY, transFZ);
 		glUniform4f(programs[current_shader]->getLocation("quat"), quat[0], quat[1], quat[2], quat[3]);
 		glUniform3f(programs[current_shader]->getLocation("centerPosition"), (xmin + xmax) / 2, (ymin + ymax) / 2, (zmin + zmax) / 2);
+		glUniform3f(programs[current_shader]->getLocation("eyePos"), gpScene->getEyePos()[0], gpScene->getEyePos()[1], gpScene->getEyePos()[2]);
 
 		glBindVertexArray(m_idVAO);
 
@@ -558,10 +559,12 @@ void CTexturedObject::setTransFX(float val)
 {
 	transFX = val;
 }
+
 void CTexturedObject::setTransFY(float val)
 {
 	transFY = val;
 }
+
 void CTexturedObject::setTransFZ(float val)
 {
 	transFZ = val;
