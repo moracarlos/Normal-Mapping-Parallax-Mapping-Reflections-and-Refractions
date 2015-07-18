@@ -21,9 +21,9 @@ private:
 	CTexture* mTexture;
 
 public:
-	CTexturedObject(std::string path, const char* texturePath);
+	CTexturedObject(std::string path, const char* texturePath, textureType mType);
 	~CTexturedObject();
-	bool initTexture(const char* file);
+	bool initTexture(const char* file, textureType mType);
 	bool initBuffers();
 	void display();
 	void displaySelection(int i);

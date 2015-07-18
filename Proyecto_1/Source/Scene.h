@@ -33,7 +33,7 @@ private:
 	std::vector<CObject*> lights;
 	glm::mat4x4 mProjectionMatrix;
 	glm::mat4x4 mModelViewMatrix;
-	CGLSLProgram normal_program, selection_program;
+	CGLSLProgram normal_program, selection_program, parallax_program;
 	glm::vec3 eyePos;
 	lightParameters mLights[3];
 	glm::vec3 ambient;

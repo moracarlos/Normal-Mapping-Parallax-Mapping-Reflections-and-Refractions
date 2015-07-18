@@ -4,7 +4,7 @@
 #include <fstream>
 extern CScene* gpScene;
 
-CTexturedObject::CTexturedObject(std::string path, const char* texturePath){
+CTexturedObject::CTexturedObject(std::string path, const char* texturePath, textureType mType){
 	nVertex = 0;
 	nFaces = 0;
 	nEdges = 0;
@@ -29,12 +29,12 @@ CTexturedObject::CTexturedObject(std::string path, const char* texturePath){
 	yaw = 0.f;
 	loadObject(path);
 	initBuffers();
-	initTexture(texturePath);
+	initTexture(texturePath, mType);
 }
 
-bool CTexturedObject::initTexture(const char* file)
+bool CTexturedObject::initTexture(const char* file, textureType mType)
 {
-	mTexture = new CTexture(file);
+	mTexture = new CTexture(file, mType);
 	return 0;
 }
 
@@ -437,37 +437,14 @@ void CTexturedObject::display(){
 
 	programs = gpScene->getProgram();
 
-	if (current_shader == 2) //Si esta habilitado el shader de toon
-	{
-		glCullFace(GL_FRONT);
-
-		programs[3]->enable(); //Habilitamos el shader para la silueta;
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vindex);
-
-		glUniformMatrix4fv(programs[current_shader]->getLocation("mModelView"), 1, GL_FALSE, glm::value_ptr(gpScene->getModelViewMatrix()));
-		glUniformMatrix4fv(programs[current_shader]->getLocation("mProjection"), 1, GL_FALSE, glm::value_ptr(gpScene->getProjectionMatrix()));
-		glUniform3f(programs[current_shader]->getLocation("scaleFactor"), scaleFX + 0.02, scaleFY + 0.02, scaleFZ + 0.02);
-		glUniform3f(programs[current_shader]->getLocation("translateFactor"), transFX, transFY, transFZ);
-		glUniform4f(programs[current_shader]->getLocation("quat"), quat[0], quat[1], quat[2], quat[3]);
-		glUniform3f(programs[current_shader]->getLocation("centerPosition"), (xmin + xmax) / 2, (ymin + ymax) / 2, (zmin + zmax) / 2);
-		glUniform3f(programs[current_shader]->getLocation("eyePos"), gpScene->getEyePos()[0], gpScene->getEyePos()[1], gpScene->getEyePos()[2]);
-
-		glBindVertexArray(m_idVAO);
-
-		//glPolygonMode(GL_BACK, GL_LINE);
-
-		glDrawElements(GL_TRIANGLES, sizeof(GLuint)*mIndexes.size(), GL_UNSIGNED_INT, NULL);
-
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-		glBindVertexArray(0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		programs[3]->disable();
-
-		glCullFace(GL_BACK);
+	switch (mTexture->getType()){
+	case NORMAL:
+		current_shader = 0;
+	break;
+	case PARALLAX:
+		current_shader = 1;
+	break;
 	}
-
 
 	programs[current_shader]->enable(); //glUseProgram;
 

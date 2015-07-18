@@ -1,9 +1,10 @@
 #include "Texture.h"
 
-CTexture::CTexture(const char* file)
+CTexture::CTexture(const char* file, textureType mType)
 {
 	nTextures = 0;
 	loadTexture(file);
+	this->mType = mType;
 }
 
 GLuint CTexture::getTextureID(int i)
@@ -74,4 +75,14 @@ void CTexture::enable()
 void CTexture::disable()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+textureType CTexture::getType()
+{
+	return mType;
+}
+
+void CTexture::setType(textureType mType)
+{
+	this->mType = mType;
 }

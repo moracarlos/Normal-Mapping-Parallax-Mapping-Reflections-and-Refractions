@@ -15,8 +15,8 @@ void CScene::loadObjects()
 {
 	//CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/Floor.png");
 	//mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
-	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/brick_diffuse.jpg");
-	mOb->getTexture()->loadTexture("./Assets/Textures/brick_height_map.jpg");
+	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/rock_diffuse.bmp", PARALLAX);
+	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
 }
 
@@ -96,11 +96,11 @@ void CScene::initShaders() {
 	//Disable the program
 	selection_program.disable();
 
-	//Normal - Parallax -------------------------------------------------------------------------------------------------
+	//Normal---------------------------------------------------------------------------------------------------
 	//Load the shaders
 	normal_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
 	//normal_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
-	normal_program.loadShader("./Assets/shaders/parallaxMapping.frag", CGLSLProgram::FRAGMENT);
+	normal_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
 	//Link the shaders in a program
 	normal_program.create_link();
 	//Enable the program
@@ -158,6 +158,67 @@ void CScene::initShaders() {
 	//Disable the program
 	normal_program.disable();
 
+	//Parallax-------------------------------
+	//Load the shaders
+	parallax_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
+	//parallax_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
+	parallax_program.loadShader("./Assets/shaders/parallaxMapping.frag", CGLSLProgram::FRAGMENT);
+	//Link the shaders in a program
+	parallax_program.create_link();
+	//Enable the program
+	parallax_program.enable();
+	//Link the attributes and the uniforms
+	parallax_program.addAttribute("vVertex");
+	parallax_program.addAttribute("vColor");
+	parallax_program.addAttribute("vNormal");
+	parallax_program.addAttribute("vTexture");
+	parallax_program.addAttribute("vTangent");
+	parallax_program.addAttribute("vBitangent");
+	parallax_program.addUniform("mProjection");
+	parallax_program.addUniform("mModelView");
+
+	parallax_program.addUniform("centerPosition");
+	parallax_program.addUniform("translateFactor");
+	parallax_program.addUniform("scaleFactor");
+	parallax_program.addUniform("quat");
+
+	parallax_program.addUniform("lightIndex");
+	parallax_program.addUniform("ambient");
+	parallax_program.addUniform("diffuse");
+	parallax_program.addUniform("specular");
+	parallax_program.addUniform("position");
+
+	for (int i = 0; i < 2; i++){
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].type");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].ambient");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].diffuse");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].specular");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].position");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].shininness");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].constantAttenuation");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].linearAttenuation");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].quadraticAttenuation");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].spotDirection");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].spotExponent");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCutoff");
+		parallax_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCosCutoff");
+	}
+
+	parallax_program.addUniform("eyePos");
+
+	parallax_program.addUniform("diffuseObject");
+	parallax_program.addUniform("specularObject");
+	parallax_program.addUniform("ambientObject");
+	parallax_program.addUniform("sceneAmbient");
+	//Constantes del modelo cook torrance
+	parallax_program.addUniform("roughnessValue");
+	parallax_program.addUniform("fresnelValue");
+	parallax_program.addUniform("gaussConstant");
+	//Texturas
+	parallax_program.addUniform("textureSampler");
+	parallax_program.addUniform("normalSampler");
+	//Disable the program
+	parallax_program.disable();
 }
 
 void CScene::setProjectionMatrix(const glm::mat4x4 &mProjectionMatrix)
@@ -330,6 +391,7 @@ CTexturedObject* CScene::getTexturedObject(int i)
 std::vector<CGLSLProgram*> CScene::getProgram(){
 	std::vector<CGLSLProgram*> programs;
 	programs.push_back(&normal_program);
+	programs.push_back(&parallax_program);
 	programs.push_back(&selection_program);
 	return programs;
 }
