@@ -38,6 +38,9 @@ private:
 	lightParameters mLights[3];
 	glm::vec3 ambient;
 	rapidjson::Document mDocument;
+	glm::vec3 P;
+	glm::vec3 V;
+	glm::mat4 R;
 
 public:
 	CScene();

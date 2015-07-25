@@ -265,16 +265,50 @@ void display()
 	std::vector<CObject*> mObjects = gpScene->getObjects();
 	std::vector<CTexturedObject*> mTexturedObjects = gpScene->getTexturedObjects();
 
-	for (int i = 0; i < mObjects.size(); i++){
-		//mObjects[i]->display();
+	for (int i = 0; i < mTexturedObjects.size(); i++){
+		mTexturedObjects[i]->display();
+	}
+
+	glFrontFace(GL_CW);
+	reshape(gpWindow, gWidth, gHeight);
+	gpScene->setProjectionMatrix(gpScene->getProjectionMatrix() * glm::lookAt(gpCamera->getPosition(), gpCamera->getPosition() + gpCamera->getFront(), gpCamera->getUp()));
+	/* Don't update color or depth. */
+	glDisable(GL_DEPTH_TEST);
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
+	/* Draw 1 into the stencil buffer. */
+	glEnable(GL_STENCIL_TEST);
+	glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+	glStencilFunc(GL_ALWAYS, 1, 0xffffffff);
+
+	/* Now drawing the floor just tags the floor pixels
+	as stencil value 1. */
+	mObjects[0]->display();
+
+	/* Re-enable update of color and depth. */
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glEnable(GL_DEPTH_TEST);
+
+	/* Now, only render where stencil is set to 1. */
+	glStencilFunc(GL_EQUAL, 1, 0xffffffff);  /* draw if stencil ==1 */
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+	/* Draw reflected ninja, but only where floor is. */
+
+	for (int i = 0; i < mTexturedObjects.size(); i++){
+		mTexturedObjects[i]->setScaleFY(-1);
+		//mObjects[i]->transFY = -2;
+		mTexturedObjects[i]->display();
 		if (i != 0) //El suelo no incrementa el yaw
 		{
 			//mObjects[i]->incrementYaw(0.01);
 		}
+		mTexturedObjects[i]->setScaleFY(1);
 	}
 
-	for (int i = 0; i < mTexturedObjects.size(); i++){
-		mTexturedObjects[i]->display();
-	}
+	glFrontFace(GL_CCW);
+	//Se dibuja normal
+	glDisable(GL_STENCIL_TEST);
+
 }
 

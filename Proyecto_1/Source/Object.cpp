@@ -410,7 +410,7 @@ void CObject::displaySelection(int i)
 {
 	programs = gpScene->getProgram();
 
-	programs[4]->enable(); //glUseProgram;
+	/*programs[4]->enable(); //glUseProgram;
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vindex);
 
@@ -428,6 +428,7 @@ void CObject::displaySelection(int i)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	programs[4]->disable();
+	*/
 
 }
 

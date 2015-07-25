@@ -187,8 +187,8 @@ int CTexturedObject::loadObject(std::string path){
 		lColor.push_back(0.0);
 
 		lVertexNormals.push_back(mVertexNormals[mIndexes[i] * 3]);
-		lVertexNormals.push_back(mVertexNormals[mIndexes[i] * 3] + 1);
-		lVertexNormals.push_back(mVertexNormals[mIndexes[i] * 3] + 2);
+		lVertexNormals.push_back(mVertexNormals[mIndexes[i] * 3 + 1]);
+		lVertexNormals.push_back(mVertexNormals[mIndexes[i] * 3 + 2]);
 
 		lTextureCoordinates.push_back(mTextureCoordinates[mTexIndex[i] * 2]);
 		lTextureCoordinates.push_back(mTextureCoordinates[mTexIndex[i] * 2 + 1]);
@@ -550,4 +550,9 @@ void CTexturedObject::setTransFZ(float val)
 CTexture* CTexturedObject::getTexture()
 {
 	return mTexture;
+}
+
+void CTexturedObject::setScaleFY(float val)
+{
+	scaleFY = val;
 }

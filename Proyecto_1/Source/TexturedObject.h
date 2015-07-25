@@ -56,5 +56,6 @@ public:
 	void setTransFX(float val);
 	void setTransFY(float val);
 	void setTransFZ(float val);
+	void setScaleFY(float val);
 	CTexture* getTexture();
 };

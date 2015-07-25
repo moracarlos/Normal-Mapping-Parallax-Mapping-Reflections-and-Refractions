@@ -61,6 +61,7 @@ void main(void)
 				BumpNorm = tbn * ((BumpNorm - 0.5) * 2.0);
 				float NL = max(dot(BumpNorm, normalize(lightDir)), 0.0);
 				newDiffuse += NL*mix(DecalCol,finalLight, vec3(0.5,0.5,0.5));
+				//newDiffuse = finalLight;
 		}
 	}
 	vFragColor = vec4(newDiffuse, 1.0);

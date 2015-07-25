@@ -1,0 +1,12 @@
+# Blender v2.73 (sub 0) OBJ File: ''
+# www.blender.org
+mtllib espejo.mtl
+o Plane
+v -5.917030 -0.008586 4.941336
+v 6.822307 -0.008586 4.941336
+v -5.917030 -0.008586 0.029868
+v 6.822307 -0.008586 0.029868
+usemtl None
+s off
+f 2 4 3
+f 1 2 3

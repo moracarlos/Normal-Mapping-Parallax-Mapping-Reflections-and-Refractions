@@ -5,6 +5,15 @@ CScene::CScene(){
 	loadLights();
 	eyePos[0] = eyePos[1] = eyePos[2] = 0;
 	initShaders();
+
+	P = glm::vec3(0, 0, 0);
+	V = glm::vec3(0, 1, 0);
+	R = glm::mat4(
+		1.0 - 2 * V.x*V.x, -2 * V.x*V.y, -2 * V.x*V.z, 2 * (glm::dot(P, V))*V.x,
+		-2 * V.x*V.y, 1 - 2 * V.y*V.y, -2 * V.y*V.z, 2 * (glm::dot(P, V))*V.y,
+		-2 * V.x*V.z, -2 * V.y*V.z, 1 - 2 * V.z*V.z, 2 * (glm::dot(P, V))*V.z,
+		0, 0, 0, 1
+		);
 }
 
 CScene::~CScene(){
@@ -47,6 +56,10 @@ void CScene::loadObjects()
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
 
+	CObject* mOb2 = new CObject("./Assets/Models/espejo.obj");
+	//mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
+	objects.push_back(mOb2);
+	
 	/*mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.jpg", PARALLAX);
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.jpg");
 	texturedObjects.push_back(mOb);
