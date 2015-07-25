@@ -38,6 +38,19 @@ void CScene::loadObjects()
 	mOb = new CTexturedObject("./Assets/Models/techo-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
 	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
 	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/cubo1.obj", "./Assets/Textures/rock_diffuse.bmp", PARALLAX);
+	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
+	texturedObjects.push_back(mOb);
+	
+	mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.bmp", PARALLAX);
+	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
+	texturedObjects.push_back(mOb);
+
+	/*mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.jpg", PARALLAX);
+	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.jpg");
+	texturedObjects.push_back(mOb);
+*/
 }
 
 void CScene::loadLights()
