@@ -49,7 +49,10 @@ void main()
     rotateMatrix[3][2] = 0.0f;
     rotateMatrix[3][3] = 1.0f;
     
-	mat4 MV = translateMatrix* returnFig*rotateMatrix*scaleMatrix*centerFig*mModelView;
+	//mat4 MV = translateMatrix* returnFig*rotateMatrix*scaleMatrix*centerFig*mModelView;
+	//Para el espejo
+	mat4 MV = translateMatrix* returnFig*rotateMatrix*centerFig*scaleMatrix*mModelView;
+
 
 	mat3 normalMatrix;
 	mat4 invTransp = inverse(transpose(MV));
