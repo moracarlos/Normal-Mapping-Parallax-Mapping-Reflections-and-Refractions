@@ -24,12 +24,18 @@ void CScene::loadObjects()
 {
 	//CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/Floor.png");
 	//mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
-	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/piso.obj", "./Assets/Textures/Floor.png", NORMAL);
+
+	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/espejo.obj","./Assets/Textures/Floor.png", NORMAL);
 	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
 	texturedObjects.push_back(mOb);
 
-	mOb = new CTexturedObject("./Assets/Models/pared1-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
-	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
+
+	mOb = new CTexturedObject("./Assets/Models/piso.obj", "./Assets/Textures/Floor.png", NORMAL);
+	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
+	//texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/pared1-brick.obj", "./Assets/Textures/Floor.png", NORMAL);
+	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
 	texturedObjects.push_back(mOb);
 	
 	mOb = new CTexturedObject("./Assets/Models/pared2-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
@@ -55,10 +61,6 @@ void CScene::loadObjects()
 	mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.bmp", PARALLAX);
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
-
-	CObject* mOb2 = new CObject("./Assets/Models/espejo.obj");
-	//mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
-	objects.push_back(mOb2);
 	
 	/*mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.jpg", PARALLAX);
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.jpg");
