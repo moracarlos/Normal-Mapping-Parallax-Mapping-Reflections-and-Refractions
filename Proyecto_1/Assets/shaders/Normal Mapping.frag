@@ -100,7 +100,7 @@ void main(void)
 	vec3 DecalCol = vec3(texture(textureSampler, UV.xy));
 	BumpNorm = tbn * ((BumpNorm - 0.5) * 2.0);
 	float NL = max(dot(BumpNorm, normalize(lightDir)), 0.0);
-	vec3 newDiffuse = NL*DecalCol*finalLight;
+	vec3 newDiffuse = NL*mix(DecalCol,finalLight, vec3(0.5,0.5,0.5));
 	vFragColor = vec4(newDiffuse, 1.0);
 }
 
