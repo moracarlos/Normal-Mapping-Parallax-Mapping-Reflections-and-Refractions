@@ -27,7 +27,7 @@ void CScene::loadObjects()
 
 	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/espejo.obj","./Assets/Textures/Floor.png", NORMAL);
 	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
-	texturedObjects.push_back(mOb);
+	mirrors.push_back(mOb);
 
 
 	mOb = new CTexturedObject("./Assets/Models/piso.obj", "./Assets/Textures/Floor.png", NORMAL);
@@ -452,4 +452,9 @@ lightParameters* CScene::getLights()
 LightParameters CScene::getLight(int i)
 {
 	return mLights[i];
+}
+
+std::vector<CTexturedObject*> CScene::getMirrors()
+{
+	return mirrors;
 }

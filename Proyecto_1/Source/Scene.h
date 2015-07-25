@@ -30,6 +30,8 @@ class CScene{
 private:
 	std::vector<CObject*> objects;
 	std::vector<CTexturedObject*> texturedObjects;
+	std::vector<CTexturedObject*> mirrors;
+
 	std::vector<CObject*> lights;
 	glm::mat4x4 mProjectionMatrix;
 	glm::mat4x4 mModelViewMatrix;
@@ -75,6 +77,7 @@ public:
 	glm::vec3 getAmbient();
 	std::vector<CObject*> getObjects();
 	std::vector<CTexturedObject*> getTexturedObjects();
+	std::vector<CTexturedObject*> getMirrors();
 	CObject* getObject(int i);
 	CTexturedObject* getTexturedObject(int i);
 	std::vector<CGLSLProgram*> getProgram();

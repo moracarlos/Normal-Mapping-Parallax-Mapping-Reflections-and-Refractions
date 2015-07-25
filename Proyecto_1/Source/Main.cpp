@@ -260,7 +260,9 @@ void display()
 
 	std::vector<CObject*> mObjects = gpScene->getObjects();
 	std::vector<CTexturedObject*> mTexturedObjects = gpScene->getTexturedObjects();
+	std::vector<CTexturedObject*> mMirrors = gpScene->getMirrors();
 
+	//Se dibujan los espejos
 	reshape(gpWindow, gWidth, gHeight);
 	gpScene->setProjectionMatrix(gpScene->getProjectionMatrix() * glm::lookAt(gpCamera->getPosition(), gpCamera->getPosition() + gpCamera->getFront(), gpCamera->getUp()));
 
@@ -274,7 +276,9 @@ void display()
 	// draw stencil pattern
 	glStencilMask(0xFF);
 	glClear(GL_STENCIL_BUFFER_BIT);  // needs mask=0xFF
-	mTexturedObjects[0]->display();
+	for (int i = 0; i < mMirrors.size(); i++){
+		mMirrors[i]->display();
+	}
 
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glDepthMask(GL_TRUE);
@@ -287,7 +291,7 @@ void display()
 
 	glFrontFace(GL_CW);
 
-	for (int i = 1; i < mTexturedObjects.size(); i++){
+	for (int i = 0; i < mTexturedObjects.size(); i++){
 		mTexturedObjects[i]->setScaleFY(-1);
 		//mObjects[i]->transFY = -2;
 		mTexturedObjects[i]->display();
@@ -309,7 +313,7 @@ void display()
 
 	gpScene->setProjectionMatrix(gpScene->getProjectionMatrix() * glm::lookAt(gpCamera->getPosition(), gpCamera->getPosition() + gpCamera->getFront(), gpCamera->getUp()));
 
-	for (int i = 1; i < mTexturedObjects.size(); i++){
+	for (int i = 0; i < mTexturedObjects.size(); i++){
 		mTexturedObjects[i]->display();
 	}
 
