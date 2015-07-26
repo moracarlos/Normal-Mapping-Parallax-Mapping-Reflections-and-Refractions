@@ -8,7 +8,8 @@ enum textureType
 {
 	NONE,
 	NORMAL,
-	PARALLAX
+	PARALLAX,
+	CUBEMAP
 };
 
 class CTexture{
@@ -20,6 +21,7 @@ private:
 	textureType mType;
 public:
 	CTexture(const char* file, textureType mType);
+	CTexture(const char* posx, const char*  negx, const char* posy, const char* negy, const char* posz, const char* negz, textureType mType);
 	unsigned int loadTexture(const char* filename);
 
 	GLuint getTextureID(int i);

@@ -316,8 +316,5 @@ void display()
 	for (int i = 0; i < mTexturedObjects.size(); i++){
 		mTexturedObjects[i]->display();
 	}
-
-	
-
 }
 

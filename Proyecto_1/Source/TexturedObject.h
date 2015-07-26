@@ -22,8 +22,10 @@ private:
 
 public:
 	CTexturedObject(std::string path, const char* texturePath, textureType mType);
+	CTexturedObject(std::string path, const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz, textureType mType);
 	~CTexturedObject();
 	bool initTexture(const char* file, textureType mType);
+	bool initCubeMap(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz,textureType mType);
 	bool initBuffers();
 	void display();
 	void displaySelection(int i);

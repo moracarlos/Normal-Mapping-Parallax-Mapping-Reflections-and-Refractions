@@ -32,9 +32,46 @@ CTexturedObject::CTexturedObject(std::string path, const char* texturePath, text
 	initTexture(texturePath, mType);
 }
 
+CTexturedObject::CTexturedObject(std::string path, const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz, textureType mType)
+{
+	nVertex = 0;
+	nFaces = 0;
+	nEdges = 0;
+	nIndex = 0;
+	current_shader = 0;
+	mIndexes.clear();
+	mVertex.clear();
+	mFaceNormals.clear();
+	mVertexNormals.clear();
+	mTextureCoordinates.clear();
+	mColor.clear();
+	xmin = ymin = zmin = xmax = ymax = zmax = NULL;
+	transFX = transFY = transFZ = 0;
+	scaleFX = scaleFY = scaleFZ = 1;
+	ambientObject[0] = ambientObject[1] = ambientObject[2] = 0.5;
+	diffuseObject[0] = diffuseObject[1] = diffuseObject[2] = 0.5;
+	specularObject[0] = specularObject[1] = specularObject[2] = 1;
+	roughnessValue = 1.0;
+	fresnelValue = 0.10;
+	gaussConstant = 100;
+	quat[0] = quat[1] = quat[2] = quat[3] = 0;
+	yaw = 0.f;
+	loadObject(path);
+	std::cout << path << std::endl;
+	initBuffers(); //Verificar para el cubemap
+	initCubeMap(posx, negx, posy, negy, posz, negz, mType);
+}
+
+
 bool CTexturedObject::initTexture(const char* file, textureType mType)
 {
 	mTexture = new CTexture(file, mType);
+	return 0;
+}
+
+bool CTexturedObject::initCubeMap(const char* posx, const char*  negx, const char* posy, const char* negy, const char* posz, const char* negz, textureType mType)
+{
+	mTexture = new CTexture(posx, negx, posy, negy, posz, negz, mType);
 	return 0;
 }
 
@@ -444,6 +481,9 @@ void CTexturedObject::display(){
 	case PARALLAX:
 		current_shader = 1;
 	break;
+	case CUBEMAP:
+		current_shader = 2;
+	break;
 	}
 
 	programs[current_shader]->enable(); //glUseProgram;
@@ -458,7 +498,7 @@ void CTexturedObject::display(){
 	glUniform4f(programs[current_shader]->getLocation("quat"), quat[0], quat[1], quat[2], quat[3]);
 	glUniform3f(programs[current_shader]->getLocation("centerPosition"), (xmin + xmax) / 2, (ymin + ymax) / 2, (zmin + zmax) / 2);
 
-	for (int i = 0; i < 3; i++){
+	for (int i = 0; i < 2; i++){
 		glUniform1i(programs[current_shader]->getLocation("lightParameters[" + std::to_string(i) + "].type"), gpScene->getLights()[i].type);
 		glUniform3fv(programs[current_shader]->getLocation("lightParameters[" + std::to_string(i) + "].ambient"), 1, glm::value_ptr(gpScene->getLights()[i].ambient));
 		glUniform3fv(programs[current_shader]->getLocation("lightParameters[" + std::to_string(i) + "].diffuse"), 1, glm::value_ptr(gpScene->getLights()[i].diffuse));
@@ -483,9 +523,13 @@ void CTexturedObject::display(){
 	glUniform1f(programs[current_shader]->getLocation("fresnelValue"), fresnelValue);
 	glUniform1f(programs[current_shader]->getLocation("gaussConstant"), gaussConstant);
 
-	glUniform1i(programs[current_shader]->getLocation("textureSampler"), 0);
-	glUniform1i(programs[current_shader]->getLocation("normalSampler"), 1);
-
+	if (mTexture->getType() == CUBEMAP){
+		glUniform1i(programs[current_shader]->getLocation("cubemapSampler"), 0);
+	}
+	else{
+		glUniform1i(programs[current_shader]->getLocation("textureSampler"), 0);
+		glUniform1i(programs[current_shader]->getLocation("normalSampler"), 1);
+	}
 	glBindVertexArray(m_idVAO);
 	glDrawArrays(GL_TRIANGLES, 0, mVertex.size()/3);
 	//glDrawElements(GL_TRIANGLES, sizeof(GLuint)*mIndexes.size(), GL_UNSIGNED_INT, NULL);

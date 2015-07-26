@@ -61,6 +61,10 @@ void CScene::loadObjects()
 	mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.bmp", PARALLAX);
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/earth.obj", "./Assets/Textures/posx.jpg", "./Assets/Textures/negx.jpg", "./Assets/Textures/posy.jpg", "./Assets/Textures/negy.jpg", "./Assets/Textures/posz.jpg", "./Assets/Textures/negz.jpg", CUBEMAP);
+	//mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
+	texturedObjects.push_back(mOb);
 	
 	/*mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.jpg", PARALLAX);
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.jpg");
@@ -267,6 +271,70 @@ void CScene::initShaders() {
 	parallax_program.addUniform("normalSampler");
 	//Disable the program
 	parallax_program.disable();
+
+	//CubeMap-------------------------------------------------
+	//Parallax-------------------------------
+	//Load the shaders
+	cubemap_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
+	//parallax_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
+	cubemap_program.loadShader("./Assets/shaders/cubeMapping.frag", CGLSLProgram::FRAGMENT);
+	//Link the shaders in a program
+	cubemap_program.create_link();
+	//Enable the program
+	cubemap_program.enable();
+	//Link the attributes and the uniforms
+	cubemap_program.addAttribute("vVertex");
+	cubemap_program.addAttribute("vColor");
+	cubemap_program.addAttribute("vNormal");
+	cubemap_program.addAttribute("vTexture");
+	cubemap_program.addAttribute("vTangent");
+	cubemap_program.addAttribute("vBitangent");
+	cubemap_program.addUniform("mProjection");
+	cubemap_program.addUniform("mModelView");
+
+	cubemap_program.addUniform("centerPosition");
+	cubemap_program.addUniform("translateFactor");
+	cubemap_program.addUniform("scaleFactor");
+	cubemap_program.addUniform("quat");
+
+	cubemap_program.addUniform("lightIndex");
+	cubemap_program.addUniform("ambient");
+	cubemap_program.addUniform("diffuse");
+	cubemap_program.addUniform("specular");
+	cubemap_program.addUniform("position");
+
+	for (int i = 0; i < 2; i++){
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].type");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].ambient");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].diffuse");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].specular");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].position");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].shininness");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].constantAttenuation");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].linearAttenuation");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].quadraticAttenuation");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].spotDirection");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].spotExponent");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCutoff");
+		cubemap_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCosCutoff");
+	}
+
+	cubemap_program.addUniform("eyePos");
+
+	cubemap_program.addUniform("diffuseObject");
+	cubemap_program.addUniform("specularObject");
+	cubemap_program.addUniform("ambientObject");
+	cubemap_program.addUniform("sceneAmbient");
+	//Constantes del modelo cook torrance
+	cubemap_program.addUniform("roughnessValue");
+	cubemap_program.addUniform("fresnelValue");
+	cubemap_program.addUniform("gaussConstant");
+	//Texturas
+	cubemap_program.addUniform("cubemapSampler");
+
+	//Disable the program
+	cubemap_program.disable();
+
 }
 
 void CScene::setProjectionMatrix(const glm::mat4x4 &mProjectionMatrix)
@@ -440,6 +508,7 @@ std::vector<CGLSLProgram*> CScene::getProgram(){
 	std::vector<CGLSLProgram*> programs;
 	programs.push_back(&normal_program);
 	programs.push_back(&parallax_program);
+	programs.push_back(&cubemap_program);
 	programs.push_back(&selection_program);
 	return programs;
 }
