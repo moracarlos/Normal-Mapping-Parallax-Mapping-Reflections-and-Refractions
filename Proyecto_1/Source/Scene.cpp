@@ -62,7 +62,7 @@ void CScene::loadObjects()
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
 
-	mOb = new CTexturedObject("./Assets/Models/earth.obj", "./Assets/Textures/posx.jpg", "./Assets/Textures/negx.jpg", "./Assets/Textures/posy.jpg", "./Assets/Textures/negy.jpg", "./Assets/Textures/posz.jpg", "./Assets/Textures/negz.jpg", CUBEMAP);
+	mOb = new CTexturedObject("./Assets/Models/earth.obj", "./Assets/Textures/posx.jpg", "./Assets/Textures/negx.jpg", "./Assets/Textures/negy.jpg", "./Assets/Textures/posy.jpg", "./Assets/Textures/posz.jpg", "./Assets/Textures/negz.jpg", CUBEMAP);
 	//mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
 	
