@@ -484,6 +484,9 @@ void CTexturedObject::display(){
 	case CUBEMAP:
 		current_shader = 2;
 	break;
+	case NONE:
+		current_shader = 3;
+	break;
 	}
 
 	programs[current_shader]->enable(); //glUseProgram;

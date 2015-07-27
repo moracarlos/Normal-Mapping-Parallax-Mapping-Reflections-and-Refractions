@@ -2,7 +2,8 @@
 #extension GL_ARB_separate_shader_objects :enable
 
 #define NUMLIGHTS 2
-uniform samplerCube cubemapSampler;
+uniform sampler2D textureSampler;
+uniform sampler2D normalSampler; //heightMap
 uniform vec3 diffuseObject, specularObject, ambientObject, sceneAmbient, eyePos;
 uniform float roughnessValue, fresnelValue, gaussConstant;
 
@@ -28,15 +29,12 @@ in vec3 fNormal;
 in vec2 UV;
 in vec3 fTangent;
 in vec3 fBitangent;
-
+in vec3 eyeVec; 
 
 layout(location = 0) out vec4 vFragColor;
 
 void main(void)
 {
-	float ratio = 1.00 / 1.52;
-	vec3 I = normalize(eyePos-fPosition);
-	vec3 R = refract(I,normalize(fNormal), ratio);
-	vFragColor = texture(cubemapSampler, R);
+	vFragColor = vec4(vec3(texture(textureSampler, UV.xy)), 1.0);
 }
 

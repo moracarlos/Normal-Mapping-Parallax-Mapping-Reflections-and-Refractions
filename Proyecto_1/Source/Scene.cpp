@@ -29,14 +29,30 @@ void CScene::loadObjects()
 	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
 	mirrors.push_back(mOb);
 
+	mOb = new CTexturedObject("./Assets/Models/negz.obj", "./Assets/Textures/negz.jpg", NONE);
+	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/posz.obj", "./Assets/Textures/posz.jpg", NONE);
+	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/negx.obj", "./Assets/Textures/negx.jpg", NONE);
+	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/posx.obj", "./Assets/Textures/posx.jpg", NONE);
+	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/negy.obj", "./Assets/Textures/negy.jpg", NONE);
+	texturedObjects.push_back(mOb);
+
 
 	mOb = new CTexturedObject("./Assets/Models/piso.obj", "./Assets/Textures/Floor.png", NORMAL);
 	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
 	//texturedObjects.push_back(mOb);
 
-	mOb = new CTexturedObject("./Assets/Models/pared1-brick.obj", "./Assets/Textures/Floor.png", NORMAL);
+	/*
+	mOb = new CTexturedObject("./Assets/Models/pared1-brick.obj", "./Assets/Textures/negz.jpg", NONE);
 	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
-	texturedObjects.push_back(mOb);
+	//texturedObjects.push_back(mOb);
 	
 	mOb = new CTexturedObject("./Assets/Models/pared2-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
 	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
@@ -50,7 +66,9 @@ void CScene::loadObjects()
 	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
 	texturedObjects.push_back(mOb);
 
-	mOb = new CTexturedObject("./Assets/Models/techo-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
+	*/
+
+	mOb = new CTexturedObject("./Assets/Models/posy.obj", "./Assets/Textures/posy.jpg", NONE);
 	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
 	texturedObjects.push_back(mOb);
 
@@ -335,6 +353,68 @@ void CScene::initShaders() {
 	//Disable the program
 	cubemap_program.disable();
 
+	//Skybox-------------------------------
+	//Load the shaders
+	skybox_program.loadShader("./Assets/shaders/basic.vert", CGLSLProgram::VERTEX);
+	//parallax_program.loadShader("./Assets/shaders/Normal Mapping.frag", CGLSLProgram::FRAGMENT);
+	skybox_program.loadShader("./Assets/shaders/skybox.frag", CGLSLProgram::FRAGMENT);
+	//Link the shaders in a program
+	skybox_program.create_link();
+	//Enable the program
+	skybox_program.enable();
+	//Link the attributes and the uniforms
+	skybox_program.addAttribute("vVertex");
+	skybox_program.addAttribute("vColor");
+	skybox_program.addAttribute("vNormal");
+	skybox_program.addAttribute("vTexture");
+	skybox_program.addAttribute("vTangent");
+	skybox_program.addAttribute("vBitangent");
+	skybox_program.addUniform("mProjection");
+	skybox_program.addUniform("mModelView");
+
+	skybox_program.addUniform("centerPosition");
+	skybox_program.addUniform("translateFactor");
+	skybox_program.addUniform("scaleFactor");
+	skybox_program.addUniform("quat");
+
+	skybox_program.addUniform("lightIndex");
+	skybox_program.addUniform("ambient");
+	skybox_program.addUniform("diffuse");
+	skybox_program.addUniform("specular");
+	skybox_program.addUniform("position");
+
+	for (int i = 0; i < 2; i++){
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].type");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].ambient");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].diffuse");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].specular");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].position");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].shininness");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].constantAttenuation");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].linearAttenuation");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].quadraticAttenuation");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].spotDirection");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].spotExponent");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCutoff");
+		skybox_program.addUniform("lightParameters[" + std::to_string(i) + "].spotCosCutoff");
+	}
+
+	skybox_program.addUniform("eyePos");
+
+	skybox_program.addUniform("diffuseObject");
+	skybox_program.addUniform("specularObject");
+	skybox_program.addUniform("ambientObject");
+	skybox_program.addUniform("sceneAmbient");
+	//Constantes del modelo cook torrance
+	skybox_program.addUniform("roughnessValue");
+	skybox_program.addUniform("fresnelValue");
+	skybox_program.addUniform("gaussConstant");
+	//Texturas
+	skybox_program.addUniform("textureSampler");
+	skybox_program.addUniform("normalSampler");
+	//Disable the program
+	skybox_program.disable();
+
 }
 
 void CScene::setProjectionMatrix(const glm::mat4x4 &mProjectionMatrix)
@@ -509,6 +589,7 @@ std::vector<CGLSLProgram*> CScene::getProgram(){
 	programs.push_back(&normal_program);
 	programs.push_back(&parallax_program);
 	programs.push_back(&cubemap_program);
+	programs.push_back(&skybox_program);
 	programs.push_back(&selection_program);
 	return programs;
 }
