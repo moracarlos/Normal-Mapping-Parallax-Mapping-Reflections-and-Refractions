@@ -22,12 +22,15 @@ CScene::~CScene(){
 
 void CScene::loadObjects()
 {
-	//CTexturedObject* mOb = new CTexturedObject("./Assets/Models/Floor.obj", "./Assets/Textures/Floor.png");
-	//mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
 
 	CTexturedObject* mOb = new CTexturedObject("./Assets/Models/espejo.obj","./Assets/Textures/Floor.png", NORMAL);
 	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
 	mirrors.push_back(mOb);
+
+	//Skybox
+
+	mOb = new CTexturedObject("./Assets/Models/negy.obj", "./Assets/Textures/negy.jpg", NONE);
+	texturedObjects.push_back(mOb);
 
 	mOb = new CTexturedObject("./Assets/Models/negz.obj", "./Assets/Textures/negz.jpg", NONE);
 	texturedObjects.push_back(mOb);
@@ -41,36 +44,11 @@ void CScene::loadObjects()
 	mOb = new CTexturedObject("./Assets/Models/posx.obj", "./Assets/Textures/posx.jpg", NONE);
 	texturedObjects.push_back(mOb);
 
-	mOb = new CTexturedObject("./Assets/Models/negy.obj", "./Assets/Textures/negy.jpg", NONE);
-	texturedObjects.push_back(mOb);
-
-
-	mOb = new CTexturedObject("./Assets/Models/piso.obj", "./Assets/Textures/Floor.png", NORMAL);
-	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
-	//texturedObjects.push_back(mOb);
-
-	/*
-	mOb = new CTexturedObject("./Assets/Models/pared1-brick.obj", "./Assets/Textures/negz.jpg", NONE);
-	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
-	//texturedObjects.push_back(mOb);
-	
-	mOb = new CTexturedObject("./Assets/Models/pared2-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
-	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
-	texturedObjects.push_back(mOb);
-
-	mOb = new CTexturedObject("./Assets/Models/pared3-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
-	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
-	texturedObjects.push_back(mOb);
-
-	mOb = new CTexturedObject("./Assets/Models/pared4-brick.obj", "./Assets/Textures/brick.jpg", NORMAL);
-	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
-	texturedObjects.push_back(mOb);
-
-	*/
-
 	mOb = new CTexturedObject("./Assets/Models/posy.obj", "./Assets/Textures/posy.jpg", NONE);
 	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
 	texturedObjects.push_back(mOb);
+
+
 
 	mOb = new CTexturedObject("./Assets/Models/cubo1.obj", "./Assets/Textures/rock_diffuse.bmp", PARALLAX);
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
@@ -80,14 +58,17 @@ void CScene::loadObjects()
 	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
 
+	mOb = new CTexturedObject("./Assets/Models/cubo3.obj", "./Assets/Textures/brick.jpg", NORMAL);
+	mOb->getTexture()->loadTexture("./Assets/Textures/brick-normal.jpg");
+	texturedObjects.push_back(mOb);
+
+	mOb = new CTexturedObject("./Assets/Models/cubo4.obj", "./Assets/Textures/Floor.png", NORMAL);
+	mOb->getTexture()->loadTexture("./Assets/Textures/FloorNormal.png");
+	texturedObjects.push_back(mOb);
+
 	mOb = new CTexturedObject("./Assets/Models/earth.obj", "./Assets/Textures/posx.jpg", "./Assets/Textures/negx.jpg", "./Assets/Textures/negy.jpg", "./Assets/Textures/posy.jpg", "./Assets/Textures/posz.jpg", "./Assets/Textures/negz.jpg", CUBEMAP);
-	//mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.bmp");
 	texturedObjects.push_back(mOb);
-	
-	/*mOb = new CTexturedObject("./Assets/Models/cubo2.obj", "./Assets/Textures/rock_diffuse.jpg", PARALLAX);
-	mOb->getTexture()->loadTexture("./Assets/Textures/rock_height.jpg");
-	texturedObjects.push_back(mOb);
-*/
+
 }
 
 void CScene::loadLights()

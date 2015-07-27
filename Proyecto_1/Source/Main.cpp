@@ -315,6 +315,10 @@ void display()
 
 	for (int i = 0; i < mTexturedObjects.size(); i++){
 		mTexturedObjects[i]->display();
+		if (i > 5) //El skybox no incrementa el yaw
+		{
+			mTexturedObjects[i]->incrementYaw(0.01);
+		}
 	}
 }
 
