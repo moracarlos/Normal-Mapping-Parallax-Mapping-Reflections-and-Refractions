@@ -1,70 +1,9 @@
-﻿Build started 12-07-2015 10:23:01 p.m..
-     1>Project "C:\Users\Carlos\Desktop\P2\Proyecto_1\Proyecto_1.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Carlos\Desktop\P2\\Proyecto_1\Assets\Headers /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Camera.cpp Source\Main.cpp Source\Object.cpp Source\Scene.cpp Source\TexturedObject.cpp Source\UserInterface.cpp
-         UserInterface.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\carlos\desktop\p2\proyecto_1\assets\headers\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.h(42): warning C4042: 'scanChar' : has bad storage class
-         TexturedObject.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\carlos\desktop\p2\proyecto_1\assets\headers\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.h(42): warning C4042: 'scanChar' : has bad storage class
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(26): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(152): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(158): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(180): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(48): warning C4101: 'numF' : unreferenced local variable
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(210): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(255): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(253): warning C4101: 'j' : unreferenced local variable
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(277): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(281): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\texturedobject.cpp(299): warning C4018: '<' : signed/unsigned mismatch
-         Scene.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\carlos\desktop\p2\proyecto_1\assets\headers\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.h(42): warning C4042: 'scanChar' : has bad storage class
-         Object.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\carlos\desktop\p2\proyecto_1\assets\headers\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.h(42): warning C4042: 'scanChar' : has bad storage class
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(24): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(130): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(39): warning C4101: 'numF' : unreferenced local variable
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(158): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(156): warning C4101: 'j' : unreferenced local variable
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(180): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(184): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\object.cpp(202): warning C4018: '<' : signed/unsigned mismatch
-         Main.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\carlos\desktop\p2\proyecto_1\assets\headers\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.h(42): warning C4042: 'scanChar' : has bad storage class
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.cpp(28): warning C4316: 'CScene' : object allocated on the heap may not be aligned 16
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.cpp(107): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.cpp(172): warning C4042: 'scanChar' : has bad storage class
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.cpp(182): warning C4101: 'i' : unreferenced local variable
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.cpp(268): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.cpp(276): warning C4018: '<' : signed/unsigned mismatch
-         Camera.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\carlos\desktop\p2\proyecto_1\assets\headers\glfw\glfw3.h(92) : see previous definition of 'APIENTRY'
-     1>c:\users\carlos\desktop\p2\proyecto_1\source\main.h(42): warning C4042: 'scanChar' : has bad storage class
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Carlos\Desktop\P2\Debug\Proyecto_1.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Carlos\Desktop\P2\\Proyecto_1\Assets\Lib AntTweakBar.lib AntTweakBar64.lib glfw3dll.lib OpenGL32.lib glew32.lib glew32s.lib DevIL.lib ILU.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Carlos\Desktop\P2\Debug\Proyecto_1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Carlos\Desktop\P2\Debug\Proyecto_1.lib" /MACHINE:X86 Debug\Camera.obj
-         Debug\GLSLProgram.obj
-         Debug\GPUProperties.obj
-         Debug\Main.obj
-         Debug\Object.obj
-         Debug\Scene.obj
-         Debug\Texture.obj
-         Debug\TexturedObject.obj
-         Debug\UserInterface.obj
-         Proyecto_1.vcxproj -> C:\Users\Carlos\Desktop\P2\Debug\Proyecto_1.exe
-     1>Done Building Project "C:\Users\Carlos\Desktop\P2\Proyecto_1\Proyecto_1.vcxproj" (Build target(s)).
+﻿Build started 29-07-2015 10:24:39 p.m..
+     1>Project "C:\Users\Carlos\Desktop\proyecto_2_v2\Proyecto_1\Proyecto_1.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Proyecto_1.vcxproj -> C:\Users\Carlos\Desktop\proyecto_2_v2\Debug\Proyecto_1.exe
+     1>Done Building Project "C:\Users\Carlos\Desktop\proyecto_2_v2\Proyecto_1\Proyecto_1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:12.03
+Time Elapsed 00:00:00.17

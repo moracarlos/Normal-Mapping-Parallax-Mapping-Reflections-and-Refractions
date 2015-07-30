@@ -98,14 +98,15 @@ void processSelection(int xx, int yy)
 		glFrontFace(GL_CCW);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.f);
-		std::vector<CObject*> mObjects = gpScene->getObjects();
+		std::vector<CTexturedObject*> mTexturedObjects = gpScene->getTexturedObjects();
+
 
 		reshape(gpWindow, gWidth, gHeight);
 
 		gpScene->setProjectionMatrix(gpScene->getProjectionMatrix() * glm::lookAt(gpCamera->getPosition(), gpCamera->getPosition() + gpCamera->getFront(), gpCamera->getUp()));
 
-		for (int i = 0; i < mObjects.size(); i++){
-			mObjects[i]->displaySelection(i);
+		for (int i = 0; i < mTexturedObjects.size(); i++){
+			mTexturedObjects[i]->displaySelection(i);
 		}
 
 
@@ -120,16 +121,16 @@ void processSelection(int xx, int yy)
 		switch (pickedID)
 		{
 		case 3355443:
-			picked = 0;
+			picked = 6;
 			break;
 		case 5000268:
-			picked = 1;
+			picked = 7;
 			break;
 		case 6710886:
-			picked = 2;
+			picked = 8;
 			break;
 		case 8421504:
-			picked = 3;
+			picked = 9;
 			break;
 		default:
 			break;

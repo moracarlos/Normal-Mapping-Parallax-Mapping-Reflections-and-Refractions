@@ -550,7 +550,7 @@ void CTexturedObject::displaySelection(int i)
 
 	programs[4]->enable(); //glUseProgram;
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vindex);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vindex);
 
 	glUniformMatrix4fv(programs[4]->getLocation("mModelView"), 1, GL_FALSE, glm::value_ptr(gpScene->getModelViewMatrix()));
 	glUniformMatrix4fv(programs[4]->getLocation("mProjection"), 1, GL_FALSE, glm::value_ptr(gpScene->getProjectionMatrix()));
@@ -559,9 +559,9 @@ void CTexturedObject::displaySelection(int i)
 	glUniform4f(programs[4]->getLocation("quat"), quat[0], quat[1], quat[2], quat[3]);
 	glUniform3f(programs[4]->getLocation("centerPosition"), (xmin + xmax) / 2, (ymin + ymax) / 2, (zmin + zmax) / 2);
 	glUniform1i(programs[4]->getLocation("code"), i);
-
 	glBindVertexArray(m_idVAO);
-	glDrawElements(GL_TRIANGLES, sizeof(GLuint)*mIndexes.size(), GL_UNSIGNED_INT, NULL);
+	//glDrawElements(GL_TRIANGLES, sizeof(GLuint)*mIndexes.size(), GL_UNSIGNED_INT, NULL);
+	glDrawArrays(GL_TRIANGLES, 0, mVertex.size() / 3);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

@@ -42,7 +42,7 @@ void main(void)
 	for (int i=0; i<NUMLIGHTS; i++)
 	{
 		if (lightParameters[i].type == 1){
-			lightDir = normalize(lightParameters[i].position-fPosition);
+			lightDir = -lightParameters[i].spotDirection;
 			NdotL = max(dot(fNormal, lightDir), 0.0);
 			diffuse = diffuseObject * lightParameters[i].diffuse;
 			ambient = ambientObject * lightParameters[i].ambient;
@@ -53,44 +53,6 @@ void main(void)
 				NdotRV = max(dot(R,V), 0.0);
 				specular = specularObject * lightParameters[i].specular * pow(NdotRV, lightParameters[i].shininness);
 				finalLight += specular;
-			}
-		}
-		else if (lightParameters[i].type == 2){ //Puntual
-			lightDir = lightParameters[i].position-fPosition;
-			distance = length(lightDir);
-			NdotL = max(dot(fNormal, normalize(lightDir)), 0.0);
-			diffuse = diffuseObject * lightParameters[i].diffuse;
-			ambient = ambientObject * lightParameters[i].ambient;
-			if (NdotL>0.0){
-				att = 1.0/(lightParameters[i].constantAttenuation + lightParameters[i].linearAttenuation + lightParameters[i].quadraticAttenuation * distance * distance);
-				finalLight+= att*(NdotL * diffuse + ambient);
-				float NdotRV;
-				vec3 R = reflect(-normalize(lightDir), fNormal);
-				vec3 V = normalize(eyePos-fPosition);
-				NdotRV = max(dot(R,V), 0.0);
-				specular = specularObject * lightParameters[i].specular * pow(NdotRV, lightParameters[i].shininness);
-				finalLight += att*(specular);
-			}
-		}
-		else if (lightParameters[i].type == 3){
-			lightDir = lightParameters[i].position-fPosition;
-			distance = length(lightDir);
-			NdotL = max(dot(fNormal, normalize(lightDir)), 0.0);
-			diffuse = diffuseObject * lightParameters[i].diffuse;
-			ambient = ambientObject * lightParameters[i].ambient;
-			if (NdotL>0.0){
-				spotEffect = dot (normalize(lightParameters[i].spotDirection), normalize(-lightDir));
-				if (spotEffect > lightParameters[i].spotCosCutoff){
-					spotEffect = pow(spotEffect, lightParameters[i].spotExponent);
-					att = spotEffect/(lightParameters[i].constantAttenuation + lightParameters[i].linearAttenuation + lightParameters[i].quadraticAttenuation * distance * distance);
-					finalLight+= att*(NdotL * diffuse + ambient);
-					float NdotRV;
-					vec3 R = reflect(-normalize(lightDir), fNormal);
-					vec3 V = normalize(eyePos-fPosition);
-					NdotRV = max(dot(R,V), 0.0);
-					specular = specularObject * lightParameters[i].specular * pow(NdotRV, lightParameters[i].shininness);
-					finalLight += att*(specular);
-				}
 			}
 		}
 	}
@@ -104,6 +66,9 @@ void main(void)
 	vec2 newCoords = UV + (eye.xy * v);
 	vec3 rgb = texture2D(textureSampler, newCoords).rgb;
 	
-	vFragColor = vec4(rgb, 1.0);
+	vec4 ilumination = vec4(clamp(finalLight, vec3(0), vec3(1)), 1.0);
+	vFragColor = clamp(vec4(rgb, 1.0)*ilumination, vec4(0), vec4(1));
+
+	//vFragColor = vec4(rgb, 1.0);
 }
 

@@ -42,6 +42,15 @@
     <None Include="Assets\shaders\Normal Mapping.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Assets\shaders\parallaxMapping.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\shaders\cubeMapping.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\shaders\skybox.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Camera.h">
